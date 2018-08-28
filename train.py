@@ -79,17 +79,17 @@ def create_model(input_shape=(30, 120, 176, 1), rnn_units=128, cnn_units=32, num
     x = Dropout(.5)(x)
 
     x = TimeDistributed(Flatten())(x)
-    #x = LSTM(rnn_units, return_sequences=True)(x)
-    x = GRU(units=rnn_units, return_sequences=True)(x)
+    x = LSTM(rnn_units, return_sequences=True)(x)
+    #x = GRU(units=rnn_units, return_sequences=True)(x)
     x = Dropout(.5)(x)
 
     x = TimeDistributed(Flatten())(x)
-    #x = LSTM(rnn_units, return_sequences=True)(x)
-    x = GRU(units=rnn_units, return_sequences=True)(x)
+    x = LSTM(rnn_units, return_sequences=True)(x)
+    #x = GRU(units=rnn_units, return_sequences=True)(x)
     x = Dropout(.5)(x)
 
-    #x = LSTM(rnn_units, return_sequences=False)(x)
-    x = GRU(units=rnn_units, return_sequences=False)(x)
+    x = LSTM(rnn_units, return_sequences=False)(x)
+    #x = GRU(units=rnn_units, return_sequences=False)(x)
 
     x = Dropout(.5)(x)
     x = Dense(4, activation='softmax')(x)
@@ -109,14 +109,14 @@ def get_worker(mdir, fn):
         return pickle.load(handle)
 
 
-def rand_getDataSet(dataset_path = "./datasets", size=100):
+#def rand_getDataSet(dataset_path = "./datasets", size=100):
+def rand_getDataSet(dataset_path = "./datasets", epochs=20, batchsize=8, ds_count=100):
     random.seed(9001)
     r_file_no = int(random.randint(0,300))
     count = 0
-    while count < 20*40:
+    while count < epochs * int(ds_count/batchsize):
         count += 1
         fns = os.listdir(dataset_path)
-        #np.random.seed(1)
         np.random.shuffle(fns)
         fns = fns[0:7]
 
@@ -124,6 +124,7 @@ def rand_getDataSet(dataset_path = "./datasets", size=100):
             delayed(get_worker)(dataset_path, fns[i]) for i in tqdm( range(len(fns)),
                                                                      ascii=True,
                                                                      desc="Loading DS", ) )
+
 
         #all_data = getDataSet(dataset_path, data_size)
         train_x = np.array([x for (x, y) in all_datasets])
@@ -183,6 +184,7 @@ def train( dataset_path = "./datasets",
 
     batch_size = 8
 
+
     print("--"*5, "=="*5, "Dataset Info", "=="*5, "--"*5)
     print('X_train_raw shape:', train_x.shape)
     print(train_x.shape[0], 'train samples')
@@ -199,14 +201,13 @@ def train( dataset_path = "./datasets",
 
     m_model = create_model(input_shape=train_x.shape[1:], nb_category=train_y.shape[1], rnn_units=128, cnn_units=32, num_gpu=1)
     #Updated for "fit_generator"
-    m_model.fit_generator(rand_getDataSet("./datasets/nfbCCTV-N1-N-90.01-M", 1), steps_per_epoch=int(len(train_y[0:])) / batch_size,
+    m_model.fit_generator(rand_getDataSet("./datasets/nfbCCTV-N1-N-90.01-M", nb_epochs,batch_size, int(len(train_y[0:]))), steps_per_epoch=int(len(train_y[0:])) / batch_size,
                           epochs=nb_epochs,
-                          validation_data=rand_getDataSet("./datasets_val/nfbCCTV-N1-N-90.01-M", batch_size),
+                          validation_data=rand_getDataSet("./datasets_val/nfbCCTV-N1-N-90.01-M", nb_epochs, batch_size,  int(len(train_y[0:]))),
                           validation_steps=int(len(train_y_val[0:])) / batch_size)
 
-
+    # m_model.fit_generator(rand_getDataSet(dataset_path, 1), steps_per_epoch=320/8, epochs=nb_epochs)
     #m_model.fit(train_x, train_y, batch_size=batch_size, epochs=nb_epochs, validation_split=0.1, shuffle=True, verbose=1, callbacks=callbacks)
-    #m_model.fit_generator(rand_getDataSet(dataset_path, 1), steps_per_epoch=320/8, epochs=nb_epochs)
     #print("--"*5, "=="*5, "Model Results", "=="*5, "--"*5)
     #scores = m_model.evaluate(train_x_val, trin_y_val, verbose=1)
     #print("##Model %s: %.2f%%" % (m_model.metrics_names[1], scores[1]*100))
