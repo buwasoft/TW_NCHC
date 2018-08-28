@@ -79,17 +79,17 @@ def create_model(input_shape=(30, 120, 176, 1), rnn_units=128, cnn_units=32, num
     x = Dropout(.5)(x)
 
     x = TimeDistributed(Flatten())(x)
-    x = LSTM(rnn_units, return_sequences=True)(x)
-    #x = GRU(units=rnn_units, return_sequences=True)(x)
+    #x = LSTM(rnn_units, return_sequences=True)(x)
+    x = GRU(units=rnn_units, return_sequences=True)(x)
     x = Dropout(.5)(x)
 
     x = TimeDistributed(Flatten())(x)
-    x = LSTM(rnn_units, return_sequences=True)(x)
-    #x = GRU(units=rnn_units, return_sequences=True)(x)
+    #x = LSTM(rnn_units, return_sequences=True)(x)
+    x = GRU(units=rnn_units, return_sequences=True)(x)
     x = Dropout(.5)(x)
 
-    x = LSTM(rnn_units, return_sequences=False)(x)
-    #x = GRU(units=rnn_units, return_sequences=False)(x)
+    #x = LSTM(rnn_units, return_sequences=False)(x)
+    x = GRU(units=rnn_units, return_sequences=False)(x)
 
     x = Dropout(.5)(x)
     x = Dense(4, activation='softmax')(x)
@@ -213,10 +213,6 @@ def train( dataset_path = "./datasets",
     #print("##Model %s: %.2f%%" % (m_model.metrics_names[1], scores[1]*100))
 
 
-    #ref load_model
-    #model = load_model('weights.h5', custom_objects={'LRN2D': LRN2D ,'bce_dice_loss': bce_dice_loss, 'mean_iou': mean_iou})
-
-    '''
     model_json = m_model.to_json()
     model_fn = "%s/model.json"%(weight_path)
     with open( model_fn, "w") as json_file:
@@ -229,7 +225,7 @@ def train( dataset_path = "./datasets",
     print("Target Encoder Saved: %s"%(encoder_fn))
 
     print("Model Weights are: \n", ",\n ".join(sorted(os.listdir(weight_path))))
-    '''
+
 
 def getImgFrmFn(fn, mdir):
     return img_to_array(load_img("%s/%s"%(mdir, fn),

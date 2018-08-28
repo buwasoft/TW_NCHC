@@ -73,41 +73,31 @@ Epoch 4/20
 
 ..........................
 
-40/40 [==============================] - 19s 481ms/step - loss: 0.0964 - acc: 0.9571 - val_loss: 0.1844 - val_acc: 0.8929
+40/40 [==============================] - 19s 483ms/step - loss: 0.0837 - acc: 0.9607 - val_loss: 0.1787 - val_acc: 0.8929
 Epoch 19/20
-40/40 [==============================] - 19s 480ms/step - loss: 0.0808 - acc: 0.9679 - val_loss: 0.0653 - val_acc: 0.9643
+40/40 [==============================] - 19s 484ms/step - loss: 0.0723 - acc: 0.9607 - val_loss: 0.0818 - val_acc: 0.9286
 Epoch 20/20
-40/40 [==============================] - 19s 480ms/step - loss: 0.0712 - acc: 0.9643 - val_loss: 0.0814 - val_acc: 0.9643
+40/40 [==============================] - 19s 485ms/step - loss: 0.0874 - acc: 0.9607 - val_loss: 0.1139 - val_acc: 0.9286
 Model Saved: ./weights/model.json
 Target Encoder Saved: ./weights/encoder.pkl
 Model Weights are: 
  encoder.pkl,
  model.json,
- weights.01-0.1111.hdf5,
- weights.01-0.3959.hdf5,
- weights.01-0.4058.hdf5,
- weights.01-0.4203.hdf5,
- weights.01-0.4369.hdf5,
- weights.01-0.4493.hdf5,
- weights.01-0.4638.hdf5,
- weights.01-0.4928.hdf5,
- weights.01-0.5072.hdf5,
- weights.01-0.5217.hdf5,
- weights.01-0.5797.hdf5,
- weights.01-0.6000.hdf5,
+ weights.01-0.4107.hdf5,
  weights.01-0.6250.hdf5,
  weights.01-0.6667.hdf5,
  weights.01-0.7000.hdf5,
- weights.02-0.2222.hdf5,
- weights.02-0.4608.hdf5,
- weights.02-0.5797.hdf5,
- weights.03-0.3333.hdf5,
- weights.03-0.4198.hdf5,
- weights.05-0.4403.hdf5,
- weights.05-0.5222.hdf5,
- weights.07-0.4444.hdf5,
- weights.08-0.5556.hdf5,
- weights.20-0.6667.hdf5
+ weights.02-0.4679.hdf5,
+ weights.03-0.4750.hdf5,
+ weights.04-0.6500.hdf5,
+ weights.06-0.7500.hdf5,
+ weights.07-0.7821.hdf5,
+ weights.08-0.8464.hdf5,
+ weights.09-0.9071.hdf5,
+ weights.12-0.9429.hdf5,
+ weights.13-0.9500.hdf5,
+ weights.15-0.9750.hdf5,
+ weights.19-0.8857.hdf5
 Model building time: 403.9968 seconds.
 
 Process finished with exit code 0
