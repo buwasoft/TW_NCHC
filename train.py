@@ -204,15 +204,13 @@ def train( dataset_path = "./datasets",
     m_model.fit_generator(rand_getDataSet("./datasets/nfbCCTV-N1-N-90.01-M", nb_epochs,batch_size, int(len(train_y[0:]))), steps_per_epoch=int(len(train_y[0:])) / batch_size,
                           epochs=nb_epochs,
                           validation_data=rand_getDataSet("./datasets_val/nfbCCTV-N1-N-90.01-M", nb_epochs, batch_size,  int(len(train_y[0:]))),
-                          validation_steps=int(len(train_y_val[0:])) / batch_size)
+                          validation_steps=int(len(train_y_val[0:])) / batch_size, callbacks=callbacks)
 
     # m_model.fit_generator(rand_getDataSet(dataset_path, 1), steps_per_epoch=320/8, epochs=nb_epochs)
     #m_model.fit(train_x, train_y, batch_size=batch_size, epochs=nb_epochs, validation_split=0.1, shuffle=True, verbose=1, callbacks=callbacks)
     #print("--"*5, "=="*5, "Model Results", "=="*5, "--"*5)
     #scores = m_model.evaluate(train_x_val, trin_y_val, verbose=1)
     #print("##Model %s: %.2f%%" % (m_model.metrics_names[1], scores[1]*100))
-
-    m_model.save_weights('weights.h5')
 
 
     #ref load_model
